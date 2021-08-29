@@ -1,3 +1,7 @@
+const warnning = () => {
+    alert('Meal not found');
+}
+
 const getMealName = () => {
     const mealName = document.getElementById('search-field');
     loadData(mealName.value);
@@ -12,18 +16,25 @@ const loadData = async mealID => {
     // console.log(jsonData.meals[0]);
     if (mealID.length > 0)
         processData(jsonData.meals)
+    else
+        warnning();
 }
 
 const processData = meals => {
     const postContainer = document.getElementById('post-container');
-    meals.forEach(meal => {
-        console.log(meal);
-        const newPost = document.createElement('div');
-        newPost.classList.add('col-12', 'col-lg-4', 'col-md-6', 'text-center');
-        newPost.innerHTML = `
-        <img class="meal-img" src="${meal.strMealThumb}">
-        <h5>${meal.strMeal}</h5>
-        `;
-        postContainer.appendChild(newPost);
-    })
+    postContainer.textContent = '';
+    try {
+        meals.forEach(meal => {
+            console.log(meal);
+            const newPost = document.createElement('div');
+            newPost.classList.add('col-12', 'col-lg-4', 'col-md-6', 'text-center');
+            newPost.innerHTML = `
+            <img class="meal-img" src="${meal.strMealThumb}">
+            <h5>${meal.strMeal}</h5>
+            `;
+            postContainer.appendChild(newPost);
+        })
+    } catch (error) {
+        warnning();
+    }
 }
