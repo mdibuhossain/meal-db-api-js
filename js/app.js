@@ -1,15 +1,17 @@
 const getMealName = () => {
     const mealName = document.getElementById('search-field');
-    loadData(mealName);
+    loadData(mealName.value);
     mealName.value = '';
 }
 
 const loadData = async mealID => {
-    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${mealID.value}`;
+    const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${mealID}`;
     const response = await fetch(url);
     const jsonData = await response.json();
-    console.log(jsonData.meals[0]);
-    processData(jsonData.meals)
+    // console.log(mealID.length);
+    // console.log(jsonData.meals[0]);
+    if (mealID.length > 0)
+        processData(jsonData.meals)
 }
 
 const processData = meals => {
